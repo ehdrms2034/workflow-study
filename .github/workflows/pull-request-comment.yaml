@@ -1,14 +1,17 @@
-name: usesTest
-on: 
-  issue_comment:
-    types: [created]
+name: pull-request-comment
+inputs:
+  issue_number:
+    type: number
+    required: true
+  repo:
+    type: string
+    required: true
+  owner:
+    type: string
+    required: true
+
 jobs: 
   comment:
-    if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
-    name: comment hello world
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
       - name: Dump GitHub context
         run: echo "${{ toJSON(github.event) }}"
@@ -17,8 +20,8 @@ jobs:
         with:
           script: |
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              issue_number: ${{inputs.issue_number}},
+              owner: ${{ inputs.owner }},
+              repo: ${{ inputs.repo }},
               body: 'hello world'
             })
