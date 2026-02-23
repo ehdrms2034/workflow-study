@@ -1,6 +1,7 @@
 name: uses
-
-
+on: 
+  issue_comment:
+    types: [created]
 
 jobs: 
   if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
