@@ -1,16 +1,11 @@
 name: pull-request-comment
-on:
-  workflow_call:
-    inputs:
-      issue_number:
-        type: number
-        required: true
-      repo:
-        type: string
-        required: true
-      owner:
-        type: string
-        required: true
+inputs:
+  issue_number:
+    required: true
+  repo:
+    required: true
+  owner:
+    required: true
 
 jobs: 
   comment:
