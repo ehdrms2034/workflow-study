@@ -8,9 +8,11 @@ jobs:
     if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
     runs-on: ubuntu-latest
     steps:
-      - name: Post hello world comment
-        uses: './.github/actions/pull-request-comment'
-        with:
-          issue_number: ${{ github.event.issue.number }}
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Post hello world comment
+      uses: './.github/actions/pull-request-comment'
+      with:
+        issue_number: ${{ github.event.issue.number }}
+        owner: ${{ github.repository_owner }}
+        repo: ${{ github.event.repository.name }}
