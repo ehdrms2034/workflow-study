@@ -11,7 +11,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Post hello world comment
-      uses: './.github/workflows/pull-request-comment'
+      uses: './.github/actions/pull-request-comment'
       with:
         issue_number: ${{ github.event.issue.number }}
         owner: ${{ github.repository_owner }}
