@@ -12,6 +12,7 @@ inputs:
 
 jobs: 
   comment:
+    runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         run: echo "${{ toJSON(github.event) }}"
