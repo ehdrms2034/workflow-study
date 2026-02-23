@@ -4,7 +4,6 @@ on:
     types: [created]
 jobs: 
   comment:
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'please comment'}}
     name: comment hello world
     runs-on: ubuntu-latest
     permissions:
