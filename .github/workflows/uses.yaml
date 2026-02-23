@@ -4,8 +4,8 @@ on:
     types: [created]
 
 jobs: 
-  if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
   comment:
+    if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
     steps:
       - name: Dump GitHub context
         run: echo "${{ toJSON(github.event) }}"
