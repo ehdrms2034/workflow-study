@@ -1,28 +1,33 @@
-name: pull-request-comment
+name: 'pull-request-comment'
+description: 'PR에 댓글을 다는 커스텀 액션입니다'
+
 inputs:
   issue_number:
+    description: 'PR/Issue 번호'
     required: true
   repo:
+    description: '저장소 이름'
     required: true
   owner:
+    description: '저장소 소유자'
     required: true
 
-jobs: 
-  comment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Post hello world comment
-        uses: actions/github-script@v7
-        env:
-          # 1. inputs 값을 환경 변수로 먼저 매핑합니다.
-          ISSUE_NUMBER: ${{ inputs.issue_number }}
-          REPO_OWNER: ${{ inputs.owner }}
-          REPO_NAME: ${{ inputs.repo }}
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: Number(process.env.ISSUE_NUMBER),
-              owner: process.env.REPO_OWNER,
-              repo: process.env.REPO_NAME,
-              body: 'hello world'
-            })
+# 핵심 수정: jobs를 삭제하고 runs: using: "composite"를 사용합니다.
+runs:
+  using: "composite"
+  steps:
+    - name: Post hello world comment
+      uses: actions/github-script@v7
+      env:
+        # composite runs 내부의 steps에서는 이제 이 표현식이 허용됩니다.
+        ISSUE_NUMBER: ${{ inputs.issue_number }}
+        REPO_OWNER: ${{ inputs.owner }}
+        REPO_NAME: ${{ inputs.repo }}
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: Number(process.env.ISSUE_NUMBER),
+            owner: process.env.REPO_OWNER,
+            repo: process.env.REPO_NAME,
+            body: 'hello world'
+          })
