@@ -1,9 +1,10 @@
 name: usesTest
 on: 
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 jobs: 
   comment:
+    if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
     name: comment hello world
     runs-on: ubuntu-latest
     permissions:
