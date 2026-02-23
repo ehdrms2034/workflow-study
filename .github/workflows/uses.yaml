@@ -6,6 +6,7 @@ on:
 jobs: 
   comment:
     if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
+    runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         run: echo "${{ toJSON(github.event) }}"
