@@ -18,11 +18,16 @@ jobs:
     steps:
       - name: Post hello world comment
         uses: actions/github-script@v7
+        env:
+          # 1. inputs 값을 환경 변수로 먼저 매핑합니다.
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          REPO_OWNER: ${{ inputs.owner }}
+          REPO_NAME: ${{ inputs.repo }}
         with:
           script: |
             github.rest.issues.createComment({
-              issue_number: ${{inputs.issue_number}},
-              owner: ${{ inputs.owner }},
-              repo: ${{ inputs.repo }},
+              issue_number: Number(process.env.ISSUE_NUMBER),
+              owner: process.env.REPO_OWNER,
+              repo: process.env.REPO_NAME,
               body: 'hello world'
             })
