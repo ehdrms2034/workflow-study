@@ -58,6 +58,7 @@ runs:
                     "text": "다음 PR 내용 리뷰 해줘
 
                     ${{ steps.diff.outputs.result }}
+                    "
                   }
                 ]
               }
