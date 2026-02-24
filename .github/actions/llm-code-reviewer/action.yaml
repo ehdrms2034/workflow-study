@@ -49,12 +49,8 @@ runs:
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
       run: |
-        RESULT=$(curl -s curl --location --request POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent' \
-          --header 'x-goog-api-key: ${{ env.GEMINI_API_KEY }}' \
-          --header 'Content-Type: application/json' \
-          --header 'Accept: */*' \
-          --header 'Host: generativelanguage.googleapis.com' \
-          --data-raw '{
+        REQUEST_BODY="
+          {
             "contents": [
               {
                 "parts": [
@@ -65,8 +61,16 @@ runs:
                   }
                 ]
               }
-            ]
-            }')
+            ]}
+        "
+
+        RESULT=$(curl -s curl --location --request POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent' \
+          --header 'x-goog-api-key: ${{ env.GEMINI_API_KEY }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: */*' \
+          --header 'Host: generativelanguage.googleapis.com' \
+          --data-raw '$REQUEST_BODY'
+          )
 
         echo $RESULT
         echo $RESULT >> $GITHUB_OUTPUT
