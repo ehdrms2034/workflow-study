@@ -20,4 +20,3 @@ jobs:
         issue_number: ${{ github.event.issue.number }}
         owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
-        gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
