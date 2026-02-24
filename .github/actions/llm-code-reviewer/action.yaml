@@ -50,7 +50,7 @@ runs:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
         RAW_DIFF: ${{ steps.diff.outputs.result }}
       run: |
-        PROMPT='다음 PR 내용 요약해줘. 응답은 2단계로 나누어서 해줘. 1. PR 요약 2. PR 리뷰 \n\n ${{ env.RAW_DIFF }}'
+        PROMPT='다음 PR 내용 요약해줘. 응답은 3단계로 나누어서 해줘. 1. PR 요약 2. PR 리뷰 3. 어느 모델이 작성했는지 3번의경우에는 모델명만 짧게 언급해줘  \n\n ${{ env.RAW_DIFF }}'
 
         REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
           contents: [{
