@@ -45,7 +45,7 @@ runs:
           return prDiff;
     - name: gemini pr review request
       id: review
-      runs-on: ubuntu-latest
+      shell: bash
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
       run: |
@@ -59,6 +59,6 @@ runs:
         echo $RESULT
         echo $RESULT >> $GITHUB_OUTPUT
     - name: write comment
-      runs-on: ubuntu-latest
+      shell: bash
       run: |
         echo ${{ steps.review.outputs.result }}
