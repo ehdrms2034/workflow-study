@@ -47,10 +47,12 @@ runs:
       id: request-review
       shell: bash
       env:
+        PROMPT_PATH: ./prompt.txt
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
         RAW_DIFF: ${{ steps.diff.outputs.result }}
       run: |
-        PROMPT='다음 PR 내용 요약해줘. 응답은 3단계로 나누어서 해줘. 1. PR 요약 2. PR 리뷰 3. 참고 참고의 경우에는 너의 모델명만 짧게 언급해줘  \n\n ${{ env.RAW_DIFF }}'
+
+        PROMPT=$(echo "$PROMPT_PATH ${{ env.RAW_DIFF }}")
 
         REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
           contents: [{
