@@ -27,7 +27,7 @@ runs:
         REPO_NAME: ${{ inputs.repo }}
       with:
         script: |
-          github.rest.pulls.get({
+          const result = await github.rest.pulls.get({
             pull_number: Number(process.env.PR_NUMBER),
             owner: process.env.REPO_OWNER,
             repo: process.env.REPO_NAME,
