@@ -49,10 +49,10 @@ runs:
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
       run: |
-        PROMPT= "다음 PR 내용 요약해줘
+        PROMPT= '다음 PR 내용 요약해줘
         
         ${{ steps.diff.outputs.result }}
-        "
+        '
 
         REQUEST_BODY=(jq -n --arg diff "$PROMPT" '{
           contents: [{
