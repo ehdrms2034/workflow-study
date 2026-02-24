@@ -17,6 +17,6 @@ jobs:
     - name: Post hello world comment
       uses: './.github/actions/llm-code-reviewer'
       with:
-        pr_number: ${{ github.event.pull_request.number }}
+        pr_number: ${{ github.event.issue.number }}
         owner: ${{ github.repository_owner }}
-        repo: ${{ github.repository.name }}
+        repo: ${{ github.event.repository.name }}
