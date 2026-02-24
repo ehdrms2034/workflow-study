@@ -87,7 +87,7 @@ runs:
       with:
         script: |
           github.rest.issues.createComment({
-            issue_number: Number(process.env.ISSUE_NUMBER),
+            issue_number: Number(process.env.PR_NUMBER),
             owner: process.env.REPO_OWNER,
             repo: process.env.REPO_NAME,
             body: process.env.REVIEW_RESULT
