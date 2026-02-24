@@ -44,7 +44,7 @@ runs:
 
           return prDiff;
     - name: gemini pr review request
-      id: review
+      id: request-review
       shell: bash
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
@@ -72,11 +72,23 @@ runs:
 
         # 3. 멀티라인 텍스트를 GITHUB_OUTPUT에 안전하게 저장
           {
-            echo "review<<EOF"
+            echo "result<<EOF"
             echo "$REVIEW_RESULT"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
     - name: write comment
-      shell: bash
-      run: |
-        echo ${{ steps.review.outputs.review }}
+      uses: actions/github-script@v7
+      env:
+        # composite runs 내부의 steps에서는 이제 이 표현식이 허용됩니다.
+        ISSUE_NUMBER: ${{ inputs.issue_number }}
+        REPO_OWNER: ${{ inputs.owner }}
+        REPO_NAME: ${{ inputs.repo }}
+        REVIEW_RESULT : ${{ steps.request-review.outputs.result }}
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: Number(process.env.ISSUE_NUMBER),
+            owner: process.env.REPO_OWNER,
+            repo: process.env.REPO_NAME,
+            body: ${{ process.env.REVIEW_RESULT }}
+          })
