@@ -50,7 +50,7 @@ runs:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
         RAW_DIFF: ${{ steps.diff.outputs.result }}
       run: |
-        PROMPT='다음 PR 내용 요약해줘\n\n ${{ env.RAW_DIFF }}'
+        PROMPT='어떤 ai 모델이 요약해주는지 설명해주고 다음 PR 내용 요약해줘\n\n ${{ env.RAW_DIFF }}'
 
         REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
           contents: [{
@@ -79,7 +79,6 @@ runs:
     - name: write comment
       uses: actions/github-script@v7
       env:
-        # composite runs 내부의 steps에서는 이제 이 표현식이 허용됩니다.
         PR_NUMBER: ${{ inputs.pr_number }}
         REPO_OWNER: ${{ inputs.owner }}
         REPO_NAME: ${{ inputs.repo }}
