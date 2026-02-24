@@ -54,7 +54,19 @@ runs:
           --header 'Content-Type: application/json' \
           --header 'Accept: */*' \
           --header 'Host: generativelanguage.googleapis.com' \
-          --data-raw '${{ steps.diff.outputs.result }}')
+          --data-raw '{
+            "contents": [
+              {
+                "parts": [
+                  {
+                    "text": "다음 PR 내용 리뷰 해줘
+
+                    ${{ steps.diff.outputs.result }}
+                  }
+                ]
+              }
+            ]
+            }')
 
         echo $RESULT
         echo $RESULT >> $GITHUB_OUTPUT
