@@ -53,6 +53,9 @@ runs:
       run: |
 
         PROMPT=$(cat ${{ env.PROMPT_PATH }})
+
+        echo $PROMPT
+
         PROMPT="$PROMPT \n\n ${{ env.RAW_DIFF }}"
 
         REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
