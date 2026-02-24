@@ -72,7 +72,7 @@ runs:
 
         # 3. 멀티라인 텍스트를 GITHUB_OUTPUT에 안전하게 저장
           {
-            echo "review<<EOF"
+            echo "result<<EOF"
             echo "$REVIEW_RESULT"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
