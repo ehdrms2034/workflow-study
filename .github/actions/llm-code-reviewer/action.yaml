@@ -52,7 +52,7 @@ runs:
         RAW_DIFF: ${{ steps.diff.outputs.result }}
       run: |
 
-        PROMPT=$(echo ${{ env.PROMPT_PATH }})
+        PROMPT=$(cat ${{ env.PROMPT_PATH }})
         PROMPT="$PROMPT \n\n ${{ env.RAW_DIFF }}"
 
         REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
