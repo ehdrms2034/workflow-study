@@ -51,14 +51,14 @@ runs:
       run: |
         REQUEST_BODY="
           {
-            "contents": [
+            'contents': [
               {
-                "parts": [
+                'parts': [
                   {
-                    "text": "다음 PR 내용 리뷰 해줘
+                    'text': "다음 PR 내용 리뷰 해줘
 
                     ${{ steps.diff.outputs.result }}
-                    "
+                    '
                   }
                 ]
               }
