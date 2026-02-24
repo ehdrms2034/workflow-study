@@ -9,7 +9,7 @@ permissions:
 
 jobs: 
   comment:
-    if: github.event.issue.pull_request && github.event.comment.body == 'please comment'
+    if: github.event.issue.pull_request && github.event.comment.body == 'please review'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
