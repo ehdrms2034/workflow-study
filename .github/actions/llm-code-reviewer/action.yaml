@@ -70,7 +70,12 @@ runs:
           # .candidates[0].content.parts[0].text 경로의 값을 가져옵니다.
         REVIEW_RESULT=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
 
-        echo $REVIEW_RESULT >> $GITHUB_OUTPUT
+        # 3. 멀티라인 텍스트를 GITHUB_OUTPUT에 안전하게 저장
+          {
+            echo "review<<EOF"
+            echo "$REVIEW_RESULT"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
     - name: write comment
       shell: bash
       run: |
