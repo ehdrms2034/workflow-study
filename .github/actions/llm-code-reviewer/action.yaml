@@ -52,7 +52,7 @@ runs:
       run: |
         PROMPT='다음 PR 내용 요약해줘\n\n ${{ env.RAW_DIFF }}'
 
-        REQUEST_BODY=(jq -n --arg diff "$PROMPT" '{
+        REQUEST_BODY=$(jq -n --arg diff "$PROMPT" '{
           contents: [{
             parts: [{ text: $diff }]
           }]
