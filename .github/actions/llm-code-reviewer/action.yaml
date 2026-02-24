@@ -48,11 +48,9 @@ runs:
       shell: bash
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
+        RAW_DIFF: ${{ steps.diff.outputs.result }}
       run: |
-        PROMPT= '다음 PR 내용 요약해줘
-        
-        ${{ steps.diff.outputs.result }}
-        '
+        PROMPT= "다음 PR 내용 요약해줘\n\n" + RAW_DIFF
 
         REQUEST_BODY=(jq -n --arg diff "$PROMPT" '{
           contents: [{
