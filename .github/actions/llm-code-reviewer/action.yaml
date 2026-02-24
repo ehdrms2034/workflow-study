@@ -56,7 +56,7 @@ runs:
 
         REQUEST_BODY=(jq -n --arg diff "$PROMPT" '{
           contents: [{
-            parts: [{ text: $msg }]
+            parts: [{ text: $diff }]
           }]
         }')
 
