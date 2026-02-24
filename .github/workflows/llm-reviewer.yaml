@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Post hello world comment
+    - name: Request review to LLM(gemini)
       uses: './.github/actions/llm-code-reviewer'
       with:
         pr_number: ${{ github.event.issue.number }}
