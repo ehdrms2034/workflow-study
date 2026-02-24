@@ -1,0 +1,43 @@
+name: 'gemini-code-reviewer'
+description: 'gemini llm code reviewer'
+
+inputs:
+  pr_number:
+    description: 'PR/Issue 번호'
+    required: true
+  repo:
+    description: '저장소 이름'
+    required: true
+  owner:
+    description: '저장소 소유자'
+    required: true
+
+# 핵심 수정: jobs를 삭제하고 runs: using: "composite"를 사용합니다.
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: get pr diff
+      uses: actions/github-script@v7
+      env:
+        # composite runs 내부의 steps에서는 이제 이 표현식이 허용됩니다.
+        PR_NUMBER: ${{ inputs.pr_number }}
+        REPO_OWNER: ${{ inputs.owner }}
+        REPO_NAME: ${{ inputs.repo }}
+      with:
+        script: |
+          github.rest.pulls.get({
+            pull_number: Number(process.env.PR_NUMBER),
+            owner: process.env.REPO_OWNER,
+            repo: process.env.REPO_NAME,
+            headers: {
+              accept : 'application/vnd.github.v3.diff'
+            }
+          })
+
+          const prDiff = result.data;
+
+          console.log(result.data);
+
+          return prDiff;
