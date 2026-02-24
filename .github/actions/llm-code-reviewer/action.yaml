@@ -49,21 +49,16 @@ runs:
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
       run: |
-        REQUEST_BODY="
-          {
-            'contents': [
-              {
-                'parts': [
-                  {
-                    'text': "다음 PR 내용 리뷰 해줘
-
-                    ${{ steps.diff.outputs.result }}
-                    '
-                  }
-                ]
-              }
-            ]}
+        PROMPT= "다음 PR 내용 요약해줘
+        
+        ${{ steps.diff.outputs.result }}
         "
+
+        REQUEST_BODY=(jq -n --arg diff "$PROMPT" '{
+          contents: [{
+            parts: [{ text: $msg }]
+          }]
+        }')
 
         RESULT=$(curl -s curl --location --request POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent' \
           --header 'x-goog-api-key: ${{ env.GEMINI_API_KEY }}' \
