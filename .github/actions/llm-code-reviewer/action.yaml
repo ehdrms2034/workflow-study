@@ -63,7 +63,7 @@ runs:
           --header 'Content-Type: application/json' \
           --header 'Accept: */*' \
           --header 'Host: generativelanguage.googleapis.com' \
-          --data-raw '$REQUEST_BODY'
+          --data-raw "$REQUEST_BODY"
           )
 
         echo $RESULT
