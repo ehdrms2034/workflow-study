@@ -50,7 +50,7 @@ runs:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
       run: |
         RESULT=$(curl -s curl --location --request POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent' \
-          --header 'x-goog-api-key: ${{ GEMINI_API_KEY }}' \
+          --header 'x-goog-api-key: ${{ env.GEMINI_API_KEY }}' \
           --header 'Content-Type: application/json' \
           --header 'Accept: */*' \
           --header 'Host: generativelanguage.googleapis.com' \
