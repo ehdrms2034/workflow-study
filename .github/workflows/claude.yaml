@@ -1,0 +1,40 @@
+name: Claude Code
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  claude:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          bot_id: ${{ secrets.APP_ID }}
+          app_primary_key: ${{ secrets.APP_PRIVATE_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          show_full_output: true
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            PR 리뷰해줘.
+
+            PR리뷰는 보안적측면, 코드 품질, 성능, 가독성, 유지보수성 등등을 고려해서 작성해줘
+
+            인라인 코멘트를 활용해서 구체적인 이슈에 대해서 상세한 피드백을 제공해줘.
+
+            전반적인 PR 요약도 작성해줬으면 해.
+
+            PR 리뷰할게 없다면, "코멘트 없음"이라고 답변해줘.
+
+          # Tools for comprehensive PR review
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+            --max-turns 5
